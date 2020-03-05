@@ -13,11 +13,6 @@
     font-size: 4vw;
   }
 
-  > p {
-    color: #292a2c;
-    font-size: 1vw;
-  }
-
   > button {
     font-size: 1.5vw;
     border-radius: 10px;
@@ -34,6 +29,7 @@
   .input {
     border: 1px solid rgb(61, 60, 60);
     font-size: 1.5vw;
+    margin-bottom: 1vh;
     &.Error {
       border: 1px solid red;
     }

@@ -11,110 +11,64 @@ const OrderForm = () => {
   const [isAgreePolicy, setIsAgreePolicy] = React.useState(false);
   const [nameOfRole, setNameOfRole] = React.useState("");
 
-  const classNamesFunc = (e: any) => {
-    return classnames(style.input, {
-      [style.Error]: e
-    });
-  };
-
-  const valid = (elem: any) => {
-    if (elem.validation) {
-      return elem.validation !== elem.value;
-    } else {
-      return (
-        elem.value.length < 10 ||
-        elem.value.length === 11 ||
-        elem.value.length > 12
-      );
-    }
-  };
-
   const roles = [
     {
       key: "cahs",
       value: "Cahs",
       isChecked: nameOfRole === "cahs",
-      name: "role",
       setNameOfRole
     },
     {
       key: "card",
       value: "Card",
       isChecked: nameOfRole === "card",
-      name: "role",
       setNameOfRole
     },
     {
       key: "checkbook",
       value: "Checkbook",
       isChecked: nameOfRole === "checkbook",
-      name: "role",
       setNameOfRole
     }
   ];
 
-  const formDate = [
-    {
-      key: "name",
-      text: "Name",
-      validation: myName,
-      value: name,
-      type: "text",
-      exsample: `example: Denis`,
-      setValue: setName
-    },
-    {
-      key: "phone",
-      text: "Phone",
-      value: phone,
-      type: "number",
-      exsample: "example: 380901231212 or 0901231212",
-      setValue: setPhone
-    }
-  ];
-
   const singInSubmit = (elem: React.FormEvent<HTMLFormElement>) => {
-    if (
-      name === myName &&
-      (phone.length > 10 || phone.length < 12) &&
-      adress.length &&
-      isAgreePolicy &&
-      nameOfRole
-    ) {
-      setName("");
-      setAdress("");
-      setPhone("");
-      setIsAgreePolicy(false);
-      setNameOfRole("");
-      alert("Order was confirmed");
-      elem.preventDefault();
-    } else {
-      alert("Complete empty field");
-      elem.preventDefault();
-    }
+    elem.preventDefault();
+    setName("");
+    setAdress("");
+    setPhone("");
+    setIsAgreePolicy(false);
+    setNameOfRole("");
+    alert("Order was confirmed");
   };
   return (
     <form className={style.Form} onSubmit={singInSubmit} action="">
       <h1>Order form:</h1>
-      {formDate.map(elem => {
-        return (
-          <React.Fragment key={elem.key}>
-            <input
-              type={elem.type}
-              placeholder={elem.text}
-              className={classNamesFunc(valid(elem))}
-              id={elem.key}
-              value={elem.value}
-              onChange={e => elem.setValue(e.target.value)}
-            />
-            <p>({elem.exsample})</p>
-          </React.Fragment>
-        );
-      })}
+      <input
+        type="text"
+        placeholder="Name"
+        required={true}
+        id="name"
+        value={name}
+        onChange={e => setName(e.target.value)}
+        className={classnames(style.input, {
+          [style.Error]: name !== myName
+        })}
+      />
+      <input
+        type="number"
+        placeholder="Phone"
+        required={true}
+        id="phone"
+        value={phone}
+        onChange={e => setPhone(e.target.value)}
+        className={classnames(style.input, {})}
+      />
       <textarea
-        className={classNamesFunc(!adress.length)}
+        className={classnames(style.input)}
         id="adress"
         placeholder="Adress"
+        required={true}
         value={adress}
         onChange={elem => setAdress(elem.target.value)}
       ></textarea>
@@ -139,6 +93,7 @@ const OrderForm = () => {
           onChange={() => {
             setIsAgreePolicy(!isAgreePolicy);
           }}
+          required={true}
           type="checkbox"
           name="policy"
           id="policy"
